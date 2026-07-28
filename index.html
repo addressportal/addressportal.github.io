@@ -310,11 +310,11 @@ ONLINE
 <br>
 
 Records Indexed:
-14,823 matching residents nearby 
+<span id="recordCount"></span> records matching
 <br>
 
 Last Database Update:
-Today at 2:34 AM
+<span id="databaseUpdate"></span>
 
 </div>
 <div class="profile-card">
@@ -692,7 +692,48 @@ About | Privacy | Terms | Database Notice
 </div>
 
     <script>
+// Generate database statistics
 
+let recordCount =
+    Math.floor(Math.random() * (19000 - 13000 + 1)) + 13000;
+
+
+document.getElementById("recordCount").innerText =
+    recordCount.toLocaleString();
+
+
+
+let today = new Date();
+
+
+let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+];
+
+
+let dayName =
+    days[today.getDay()];
+
+
+let updateHour =
+    dayName;
+
+
+let updateMinute =
+    today.getDate() + 8;
+
+
+document.getElementById("databaseUpdate").innerText =
+    dayName + ":" + updateMinute + " AM";
+
+
+        
 const characters = [
 
 {
