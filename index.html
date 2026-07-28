@@ -1,14 +1,173 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Jacob's Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AddressPortal - Fictional Character Directory</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+        }
+
+        header {
+            background: #1f4e79;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .search-box {
+            background: white;
+            padding: 25px;
+            max-width: 700px;
+            margin: 30px auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        input {
+            width: 80%;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 18px;
+            background: #1f4e79;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .results {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px #ccc;
+        }
+
+        .name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1f4e79;
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-<h1>Hello World!</h1>
+<header>
+    <h1>AddressPortal</h1>
+    <p>Fictional Character Directory</p>
+</header>
 
-<p>This is my first website.</p>
+
+<div class="search-box">
+
+    <h2>Search Characters</h2>
+
+    <input id="search" placeholder="Enter character name">
+
+    <button onclick="searchCharacter()">
+        Search
+    </button>
+
+</div>
+
+
+<div class="results" id="results">
+
+</div>
+
+
+<script>
+
+const characters = [
+
+    {
+        name: "Harry Potter",
+        address: "4 Privet Drive",
+        city: "Little Whinging",
+        universe: "Harry Potter"
+    },
+
+    {
+        name: "Bilbo Baggins",
+        address: "Bag End",
+        city: "Hobbiton",
+        universe: "Middle-earth"
+    },
+
+    {
+        name: "Sherlock Holmes",
+        address: "221B Baker Street",
+        city: "London",
+        universe: "Sherlock Holmes"
+    }
+
+];
+
+
+function searchCharacter(){
+
+    let search =
+        document.getElementById("search").value.toLowerCase();
+
+    let results =
+        document.getElementById("results");
+
+    results.innerHTML = "";
+
+
+    characters.forEach(character => {
+
+        if(character.name.toLowerCase().includes(search)){
+
+            results.innerHTML += `
+
+            <div class="card">
+
+                <div class="name">
+                    ${character.name}
+                </div>
+
+                <p>
+                    Address: ${character.address}
+                </p>
+
+                <p>
+                    Location: ${character.city}
+                </p>
+
+                <p>
+                    Universe: ${character.universe}
+                </p>
+
+            </div>
+
+            `;
+
+        }
+
+    });
+
+}
+
+</script>
+
 
 </body>
 </html>
