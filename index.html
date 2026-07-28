@@ -310,7 +310,7 @@ ONLINE
 <br>
 
 Records Indexed:
-<span id="recordCount"></span> records matching
+<span id="recordCount"></span> records available
 <br>
 
 Last Database Update:
@@ -695,7 +695,7 @@ About | Privacy | Terms | Database Notice
 // Generate database statistics
 
 let recordCount =
-    Math.floor(Math.random() * (19000 - 13000 + 1)) + 13000;
+    Math.floor(Math.random() * (19000000 - 1300000 + 1)) + 1300000;
 
 
 document.getElementById("recordCount").innerText =
@@ -730,7 +730,7 @@ let updateMinute =
 
 
 document.getElementById("databaseUpdate").innerText =
-    dayName + ":" + updateMinute + " AM";
+    dayName + "5:" + updateMinute + " AM";
 
 
         
@@ -818,52 +818,80 @@ const characters = [
 
 function searchCharacter(){
 
-    let search =
-        document.getElementById("search").value.toLowerCase();
-
 
     let results =
         document.getElementById("results");
 
 
-    results.innerHTML = "";
+    results.innerHTML = `
+
+    <div class="card">
+
+        <div class="name">
+        Searching records...
+        </div>
+
+        <p>
+        Please wait while records are being verified.
+        </p>
+
+    </div>
+
+    `;
 
 
-    characters.forEach(character => {
+    let delay =
+        Math.floor(Math.random() * 3000) + 2000;
 
 
-        if(character.name.toLowerCase().includes(search)){
+    setTimeout(() => {
 
 
-            results.innerHTML += `
+        let search =
+            document.getElementById("search").value.toLowerCase();
 
-            <div class="card">
 
-                <div class="name">
-                    ${character.name}
+        results.innerHTML = "";
+
+
+        characters.forEach(character => {
+
+
+            if(character.name.toLowerCase().includes(search)){
+
+
+                results.innerHTML += `
+
+                <div class="card">
+
+                    <div class="name">
+                        ${character.name}
+                    </div>
+
+                    <p>
+                        Address: ${character.address}
+                    </p>
+
+                    <p>
+                        Location: ${character.city}
+                    </p>
+
+                    <p>
+                        Universe: ${character.universe}
+                    </p>
+
+
                 </div>
 
-                <p>
-                    Address: ${character.address}
-                </p>
+                `;
 
-                <p>
-                    Location: ${character.city}
-                </p>
-
-                <p>
-                    Universe: ${character.universe}
-                </p>
+            }
 
 
-            </div>
-
-            `;
-
-        }
+        });
 
 
-    });
+    }, delay);
 
 
 }
