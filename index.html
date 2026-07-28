@@ -236,22 +236,7 @@ The world's largest fictional character residence database
 </div>
 
 
-<div class="columns">
 
-
-<div class="box left">
-
-<h3>Search Tools</h3>
-
-<div class="link-list">
-
-<a>Character Search</a>
-<a>Address Lookup</a>
-<a>Family Search</a>
-<a>Universe Search</a>
-<a>Random Character</a>
-
-</div>
 
 </div>
 
@@ -324,6 +309,145 @@ About | Privacy | Terms | Fictional Database Notice
 
 
 </div>
+
+    <script>
+
+const characters = [
+
+{
+    name: "Harry Potter",
+    address: "4 Privet Drive",
+    city: "Little Whinging",
+    universe: "Harry Potter"
+},
+
+{
+    name: "James Potter",
+    address: "12 Dragonfly Lane",
+    city: "Austin, Texas",
+    universe: "Harry Potter"
+},
+
+{
+    name: "Lily Potter",
+    address: "88 Willow Creek Drive",
+    city: "Round Rock, Texas",
+    universe: "Harry Potter"
+},
+
+{
+    name: "Oliver Potter",
+    address: "451 Bluebonnet Trail",
+    city: "Cedar Park, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "Emily Potter",
+    address: "902 Longhorn Way",
+    city: "Georgetown, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "Nathan Potter",
+    address: "77 Barton Springs Road",
+    city: "Austin, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "Sarah Potter",
+    address: "314 Oak Meadow Court",
+    city: "Pflugerville, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "William Potter",
+    address: "205 Mustang Ridge",
+    city: "Leander, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "Jacob Potter",
+    address: "641 Cypress Creek Lane",
+    city: "Cedar Park, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "Sherlock Holmes",
+    address: "221B Baker Street",
+    city: "London",
+    universe: "Sherlock Holmes"
+},
+
+{
+    name: "Bilbo Baggins",
+    address: "Bag End",
+    city: "Hobbiton",
+    universe: "Middle-earth"
+}
+
+];
+
+
+function searchCharacter(){
+
+    let search =
+        document.getElementById("search").value.toLowerCase();
+
+
+    let results =
+        document.getElementById("results");
+
+
+    results.innerHTML = "";
+
+
+    characters.forEach(character => {
+
+
+        if(character.name.toLowerCase().includes(search)){
+
+
+            results.innerHTML += `
+
+            <div class="card">
+
+                <div class="name">
+                    ${character.name}
+                </div>
+
+                <p>
+                    Address: ${character.address}
+                </p>
+
+                <p>
+                    Location: ${character.city}
+                </p>
+
+                <p>
+                    Universe: ${character.universe}
+                </p>
+
+
+            </div>
+
+            `;
+
+        }
+
+
+    });
+
+
+}
+
+
+</script>
 
     </body>
 
