@@ -1,173 +1,272 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AddressPortal - Fictional Character Directory</title>
+<title>AddressPortal</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-        }
+<style>
 
-        header {
-            background: #1f4e79;
-            color: white;
-            padding: 25px;
-            text-align: center;
-        }
-
-        .search-box {
-            background: white;
-            padding: 25px;
-            max-width: 700px;
-            margin: 30px auto;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px #ccc;
-        }
-
-        input {
-            width: 80%;
-            padding: 12px;
-            font-size: 16px;
-        }
-
-        button {
-            padding: 12px 18px;
-            background: #1f4e79;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .results {
-            max-width: 700px;
-            margin: auto;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px #ccc;
-        }
-
-        .name {
-            font-size: 22px;
-            font-weight: bold;
-            color: #1f4e79;
-        }
-
-    </style>
-</head>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eeeeee;
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+}
 
 
-<body>
-
-<header>
-    <h1>AddressPortal</h1>
-    <p>Fictional Character Directory</p>
-</header>
-
-
-<div class="search-box">
-
-    <h2>Search Characters</h2>
-
-    <input id="search" placeholder="Enter character name">
-
-    <button onclick="searchCharacter()">
-        Search
-    </button>
-
-</div>
+header {
+    background: white;
+    border-bottom: 3px solid #1c4f8a;
+    padding: 10px;
+}
 
 
-<div class="results" id="results">
-
-</div>
-
-
-<script>
-
-const characters = [
-
-    {
-        name: "Harry Potter",
-        address: "4 Privet Drive",
-        city: "Little Whinging",
-        universe: "Harry Potter"
-    },
-
-    {
-        name: "Bilbo Baggins",
-        address: "Bag End",
-        city: "Hobbiton",
-        universe: "Middle-earth"
-    },
-
-    {
-        name: "Sherlock Holmes",
-        address: "221B Baker Street",
-        city: "London",
-        universe: "Sherlock Holmes"
-    }
-
-];
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #164a87;
+}
 
 
-function searchCharacter(){
-
-    let search =
-        document.getElementById("search").value.toLowerCase();
-
-    let results =
-        document.getElementById("results");
-
-    results.innerHTML = "";
+.tagline {
+    color: #666;
+    font-size: 13px;
+}
 
 
-    characters.forEach(character => {
+.container {
+    width: 960px;
+    margin: auto;
+}
 
-        if(character.name.toLowerCase().includes(search)){
 
-            results.innerHTML += `
+.search-area {
+    background: white;
+    border: 1px solid #bbb;
+    padding: 15px;
+    margin-top: 10px;
+}
 
-            <div class="card">
 
-                <div class="name">
-                    ${character.name}
-                </div>
+input {
+    width: 500px;
+    height: 28px;
+}
 
-                <p>
-                    Address: ${character.address}
-                </p>
 
-                <p>
-                    Location: ${character.city}
-                </p>
+button {
+    height: 34px;
+    background: #174f91;
+    color:white;
+    border:none;
+    padding:0 20px;
+}
 
-                <p>
-                    Universe: ${character.universe}
-                </p>
 
-            </div>
+.columns {
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
 
-            `;
 
-        }
+.box {
 
-    });
+    background:white;
+    border:1px solid #bbb;
+    padding:10px;
+}
+
+
+.left {
+    width:220px;
+}
+
+
+.middle {
+    width:460px;
+}
+
+
+.right {
+    width:220px;
+}
+
+
+.box h3 {
+
+    background:#174f91;
+    color:white;
+    margin:-10px -10px 10px;
+    padding:7px;
+    font-size:15px;
 
 }
 
-</script>
+
+.link-list a {
+
+    display:block;
+    color:#174f91;
+    margin:5px 0;
+
+}
 
 
-</body>
+.result {
+
+    border-bottom:1px solid #ddd;
+    padding:10px 0;
+
+}
+
+
+.name {
+
+    color:#174f91;
+    font-size:18px;
+    font-weight:bold;
+
+}
+
+
+footer {
+
+    margin-top:20px;
+    background:#ddd;
+    padding:15px;
+    font-size:12px;
+    text-align:center;
+
+}
+
+
+</style>
+
+    </head>
+
+<body>
+
+    <header>
+<div class="container">
+
+<div class="logo">
+AddressPortal
+</div>
+
+<div class="tagline">
+The world's largest fictional character residence database
+</div>
+
+</div>
+</header>
+
+
+<div class="container">
+
+
+<div class="search-area">
+
+<b>Search Character Records</b><br><br>
+
+<input placeholder="Enter a character name, location, or universe">
+
+<button>SEARCH</button>
+
+</div>
+
+
+<div class="columns">
+
+
+<div class="box left">
+
+<h3>Search Tools</h3>
+
+<div class="link-list">
+
+<a>Character Search</a>
+<a>Address Lookup</a>
+<a>Family Search</a>
+<a>Universe Search</a>
+<a>Random Character</a>
+
+</div>
+
+</div>
+
+
+
+<div class="box middle">
+
+<h3>Featured Records</h3>
+
+
+<div class="result">
+
+<div class="name">
+Harry Potter
+</div>
+
+Address:
+4 Privet Drive
+
+<br>
+
+Status:
+Verified fictional resident
+
+</div>
+
+
+
+<div class="result">
+
+<div class="name">
+Sherlock Holmes
+</div>
+
+Address:
+221B Baker Street
+
+<br>
+
+Status:
+Verified fictional resident
+
+</div>
+
+
+</div>
+
+
+
+<div class="box right">
+
+<h3>Popular Searches</h3>
+
+<a>Batman</a><br>
+<a>Frodo Baggins</a><br>
+<a>Walter White</a><br>
+<a>Katniss Everdeen</a><br>
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+About | Privacy | Terms | Fictional Database Notice
+
+</footer>
+
+
+</div>
+
+    </body>
+
 </html>
