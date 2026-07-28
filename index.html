@@ -833,83 +833,84 @@ const characters = [
 ];
 
 
-function searchCharacter(){
+function searchCharacter() {
 
+    const results = document.getElementById("results");
+    const originalSearch = document.getElementById("search").value.trim();
+    const search = originalSearch.toLowerCase();
 
-    let results =
-        document.getElementById("results");
-
-
+    // Show fake loading message
     results.innerHTML = `
-
-    <div class="card">
-
-        <div class="name">
-        Searching records...
+        <div class="card">
+            <div class="name">Searching records...</div>
+            <p>Please wait while records are being verified.</p>
         </div>
-
-        <p>
-        Please wait while records are being verified.
-        </p>
-
-    </div>
-
     `;
 
-
-    let delay =
-        Math.floor(Math.random() * 3000) + 2000;
-
+    const delay = Math.floor(Math.random() * 3000) + 2000;
 
     setTimeout(() => {
 
-
-        let search =
-            document.getElementById("search").value.toLowerCase();
-
-
         results.innerHTML = "";
 
+        let found = false;
 
         characters.forEach(character => {
 
+            if (character.name.toLowerCase().includes(search)) {
 
-            if(character.name.toLowerCase().includes(search)){
-
+                found = true;
 
                 results.innerHTML += `
+                    <div class="card">
 
-                <div class="card">
+                        <div class="name">${character.name}</div>
 
-                    <div class="name">
-                        ${character.name}
+                        <p><b>Address:</b> ${character.address}</p>
+
+                        <p><b>Location:</b> ${character.city}</p>
+
+                        <p><b>Universe:</b> ${character.universe}</p>
+
                     </div>
-
-                    <p>
-                        Address: ${character.address}
-                    </p>
-
-                    <p>
-                        Location: ${character.city}
-                    </p>
-
-                    <p>
-                        Universe: ${character.universe}
-                    </p>
-
-
-                </div>
-
                 `;
 
             }
 
-
         });
 
+        // Nothing found
+        if (!found) {
+
+            const pathName = originalSearch.replace(/\s+/g, "-");
+
+            const wpURL =
+                `https://www.whitepages.com/name/${pathName}`;
+
+            results.innerHTML = `
+                <div class="card">
+
+                    <div class="name">
+                        No AddressPortal records found
+                    </div>
+
+                    <p>
+                        Your search did not match any local records.
+                    </p>
+
+                    <p>
+                        <a href="${wpURL}" target="_blank"
+                           style="font-size:16px;font-weight:bold;color:#1f4e79;">
+                            Search Whitepages →
+                        </a>
+                    </p>
+
+                </div>
+            `;
+
+        }
 
     }, delay);
-
 
 }
 document.querySelectorAll("a").forEach(link => {
@@ -926,7 +927,7 @@ document.querySelectorAll("a").forEach(link => {
         overlay.style.display = "flex";
 
 
-        ssetTimeout(() => {
+        setTimeout(() => {
 
     const search = document.getElementById("search").value.trim().toLowerCase();
     const originalSearch = document.getElementById("search").value.trim();
