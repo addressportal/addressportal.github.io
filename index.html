@@ -117,13 +117,74 @@ The world's largest fictional character residence database
 <div class="container">
 
 
-<div class="search-area">
+<div class="search-box">
 
-<b>Search Character Records</b><br><br>
+    <h2>Search Character Records</h2>
 
-<input placeholder="Enter a character name, location, or universe">
+    <input id="search" placeholder="Enter character name">
 
-<button>SEARCH</button>
+    <button onclick="searchCharacter()">
+        SEARCH
+    </button>
+
+    <p>
+        Search our fictional database of characters, residences, and locations.
+    </p>
+
+</div>
+
+
+
+<div class="directory-columns">
+
+
+    <div class="directory-box">
+
+        <h3>Search Tools</h3>
+
+        <a href="#">Character Search</a><br>
+        <a href="#">Address Lookup</a><br>
+        <a href="#">Family Connections</a><br>
+        <a href="#">Universe Search</a><br>
+        <a href="#">Random Character</a>
+
+    </div>
+
+
+
+    <div class="directory-box">
+
+        <h3>Popular Searches</h3>
+
+        <a href="#">Harry Potter</a><br>
+        <a href="#">Batman</a><br>
+        <a href="#">Sherlock Holmes</a><br>
+        <a href="#">Frodo Baggins</a><br>
+        <a href="#">Katniss Everdeen</a>
+
+    </div>
+
+
+
+    <div class="directory-box">
+
+        <h3>Recent Activity</h3>
+
+        <p>
+            Harry Potter<br>
+            Sherlock Holmes<br>
+            Bilbo Baggins<br>
+            Bruce Wayne
+        </p>
+
+    </div>
+
+
+</div>
+
+
+
+<div class="results" id="results">
 
 </div>
 
