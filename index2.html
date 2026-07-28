@@ -1,1 +1,1022 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+
+<title>AddressPortal</title>
+
+
+<script type="application/ld+json">
+
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "AddressPortal",
+  "url": "https://addressportal.github.io/",
+  "author": {
+    "@type": "Person",
+    "name": "Jacob Ludden"
+  }
+}
+
+</script>
+
+
+<style>
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #e9e9e9;
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+}
+
+header {
+    background: white;
+    border-bottom: 3px solid #1f4e79;
+    padding: 15px;
+    text-align: left;
+}
+
+header h1 {
+    margin: 0;
+    color: #1f4e79;
+    font-size: 32px;
+}
+
+header p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+
+.search-box {
+    background: white;
+    border: 1px solid #aaa;
+    padding: 15px;
+    max-width: 900px;
+    margin: 10px auto;
+    box-shadow: 0 1px 3px #bbb;
+    border-radius: 0;
+}
+
+
+input {
+    width: 70%;
+    padding: 8px;
+    border: 1px solid #888;
+}
+
+.profile-card {
+
+    background:white;
+    border:1px solid #888;
+    margin:15px auto;
+    max-width:900px;
+    padding:15px;
+
+}
+
+
+.profile-header {
+
+    background:#1f4e79;
+    color:white;
+    padding:10px;
+    font-size:20px;
+    font-weight:bold;
+
+}
+
+
+.profile-section {
+
+    border-top:1px solid #ccc;
+    margin-top:12px;
+    padding-top:10px;
+
+}
+
+
+.profile-grid {
+
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:10px;
+
+}
+
+
+.profile-box {
+
+    border:1px solid #bbb;
+    background:#f9f9f9;
+    padding:10px;
+
+}
+
+
+.small-label {
+
+    color:#666;
+    font-size:11px;
+    text-transform:uppercase;
+
+}
+
+
+.fake-link {
+
+    color:#1f4e79;
+}
+
+    .loading-overlay {
+
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(255,255,255,0.65);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+
+}
+
+
+.spinner {
+
+    width:45px;
+    height:45px;
+    border:6px solid #ccc;
+    border-top:6px solid #1f4e79;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+    from {
+        transform:rotate(0deg);
+    }
+
+    to {
+        transform:rotate(360deg);
+    }
+
+}
+
+
+.loading-text {
+
+    margin-top:15px;
+    font-size:14px;
+    color:#444;
+
+}
+button {
+    padding: 9px 20px;
+    background: #1f4e79;
+    color: white;
+    border: 0;
+    cursor: pointer;
+}
+
+
+.results {
+    max-width: 900px;
+    margin: 10px auto;
+}
+
+
+.card {
+    background: white;
+    border: 1px solid #aaa;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 0;
+    box-shadow: 0 1px 2px #ccc;
+}
+
+
+.name {
+    font-size: 20px;
+    color: #1f4e79;
+    font-weight: bold;
+}
+
+
+.card:before {
+    content: "✓ VERIFIED RECORD";
+    display: block;
+    font-size: 11px;
+    color: green;
+    margin-bottom: 5px;
+}
+
+
+    .directory-columns {
+
+    max-width: 900px;
+    margin: 10px auto;
+    display: flex;
+    gap: 10px;
+
+}
+
+
+.directory-box {
+
+    background: white;
+    border: 1px solid #aaa;
+    padding: 10px;
+    flex: 1;
+    min-height: 150px;
+
+}
+
+
+.directory-box h3 {
+
+    background: #1f4e79;
+    color: white;
+    margin: -10px -10px 10px;
+    padding: 8px;
+    font-size: 15px;
+
+}
+
+
+.directory-box a {
+
+    color: #1f4e79;
+    text-decoration: none;
+    line-height: 1.8;
+
+}
+
+
+.directory-box a:hover {
+
+    text-decoration: underline;
+
+}
+
+</style>
+
+    </head>
+
+<body>
+<div class="loading-overlay" id="loadingOverlay">
+
+    <div style="text-align:center">
+
+        <div class="spinner"></div>
+
+        <div class="loading-text">
+            Searching records...
+        </div>
+
+    </div>
+
+</div>
+    <header>
+<div class="container">
+
+<div class="logo">
+AddressPortal
+</div>
+
+<div class="tagline">
+The world's largest residence database
+</div>
+
+</div>
+</header>
+
+
+<div class="container">
+
+
+<div class="search-box">
+
+    <h2>Search Records</h2>
+
+    <input id="search" placeholder="Enter name">
+
+    <button onclick="searchCharacter()">
+        SEARCH
+    </button>
+
+    <p>
+        Search our database of residences and locations.
+    </p>
+
+</div>
+<div style="font-size:12px;color:#666">
+
+Database Status:
+<span style="color:green">
+ONLINE
+</span>
+<br>
+
+Records Indexed:
+<span id="recordCount"></span> records available
+<br>
+
+Last Database Update:
+<span id="databaseUpdate"></span>
+
+</div>
+<div class="profile-card">
+
+
+<div class="profile-header">
+
+✓ VERIFIED RECORD FOUND:
+Harry James Potter
+
+</div>
+
+
+<p>
+<b>Record ID:</b> HP-00074291
+<br>
+
+<b>Confidence Score:</b> 98.7%
+<br>
+
+<b>Database Category:</b> Wizarding / Residential / Historical
+
+</p>
+
+
+
+<div class="profile-section">
+
+<h3>Basic Information</h3>
+
+
+<div class="profile-grid">
+
+
+<div class="profile-box">
+
+<div class="small-label">
+Known As
+</div>
+
+The Boy Who Lived<br>
+The Chosen One<br>
+Master of Death
+
+</div>
+
+
+<div class="profile-box">
+
+<div class="small-label">
+Birth Information
+</div>
+
+April 24, 1992<br>
+Dallas, Texas<br>
+United States
+
+</div>
+
+
+<div class="profile-box">
+
+<div class="small-label">
+Current Status
+</div>
+
+Active Record<br>
+Last Verified:
+2017
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+<div class="profile-section">
+
+<h3>Residence History</h3>
+
+
+<table width="100%" border="1" cellspacing="0">
+
+<tr>
+<td><b>Location</b></td>
+<td><b>Status</b></td>
+<td><b>Associated Records</b></td>
+</tr>
+
+
+<tr>
+<td>
+4 Privet Drive<br>
+Little Whinging
+</td>
+
+<td>
+Primary Residence
+</td>
+
+<td>
+Dursley Family
+</td>
+
+</tr>
+
+
+<tr>
+<td>
+Hogwarts School<br>
+Gryffindor Tower
+</td>
+
+<td>
+Educational Residence
+</td>
+
+<td>
+Weasley Family<br>
+Hermione Granger
+</td>
+
+</tr>
+
+
+<tr>
+<td>
+Godric's Hollow
+</td>
+
+<td>
+Historical Residence
+</td>
+
+<td>
+James Potter<br>
+Lily Potter
+</td>
+
+</tr>
+
+
+</table>
+
+
+</div>
+
+
+
+
+<div class="profile-section">
+
+
+<h3>
+Possible Related Records
+</h3>
+
+
+<div class="profile-grid">
+
+
+<div class="profile-box fake-link">
+James Potter
+</div>
+
+<div class="profile-box fake-link">
+Lily Potter
+</div>
+
+<div class="profile-box fake-link">
+Sirius Black
+</div>
+
+<div class="profile-box fake-link">
+Ron Weasley
+</div>
+
+<div class="profile-box fake-link">
+Hermione Granger
+</div>
+
+<div class="profile-box fake-link">
+Draco Malfoy
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+<div class="directory-columns">
+
+
+    <div class="directory-box">
+
+        <h3>Search Tools</h3>
+
+        <a href="#">Public Search</a><br>
+        <a href="#">Address Lookup</a><br>
+        <a href="#">Family Connections</a><br>
+        <a href="#">Universe Search</a><br>
+        <a href="#">Random Search</a>
+
+    </div>
+
+
+
+    <div class="directory-box">
+
+        <h3>Popular Searches</h3>
+
+        <a href="#">Jeff Turner</a><br>
+        <a href="#">Jack Black</a><br>
+        <a href="#">Jason Holmes</a><br>
+        <a href="#">Frodo Baggins</a><br>
+        <a href="#">Katniss Everdeen</a>
+
+    </div>
+
+
+
+    <div class="directory-box">
+
+        <h3>Recent Activity</h3>
+
+        <p>
+            Jeff Herzog<br>
+            Sherlock Holmes<br>
+            Bilbo Baggins<br>
+            Bruce Wayne
+        </p>
+
+    </div>
+<div class="directory-columns">
+
+    <div class="directory-box">
+
+        <h3>Featured Records</h3>
+
+        <div class="result">
+
+            <div class="name">
+            Harry Potter
+            </div>
+
+            Address:
+            4 Privet Drive
+
+            <br>
+
+            Status:
+            Verified resident
+
+        </div>
+
+
+        <div class="result">
+
+            <div class="name">
+            Sherlock Holmes
+            </div>
+
+            Address:
+            221B Baker Street
+
+            <br>
+
+            Status:
+            Verified resident
+
+        </div>
+
+    </div>
+
+
+    <div class="directory-box">
+
+        <h3>Popular Locations</h3>
+
+        Cedar Park<br>
+        Leander<br>
+        Austin<br>
+        Dallas<br>
+        Houston
+
+    </div>
+
+
+    <div class="directory-box">
+
+        <h3>Database Alerts</h3>
+
+        New records added:<br>
+        Harry Potter<br>
+        Batman<br>
+        Bilbo Baggins<br>
+        Sherlock Holmes
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+
+<div class="results" id="results">
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="result">
+
+<div class="name">
+Sherlock Holmes
+</div>
+
+Address:
+221B Baker Street
+
+<br>
+
+Status:
+Verified resident
+
+</div>
+
+
+</div>
+
+
+
+<div class="box right">
+
+<h3>Popular Searches</h3>
+
+<a>Batman</a><br>
+<a>Frodo Baggins</a><br>
+<a>Walter White</a><br>
+<a>Katniss Everdeen</a><br>
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+About | Privacy | Terms | Database Notice
+
+</footer>
+
+
+</div>
+
+    <script>
+// Generate database statistics
+
+let recordCount =
+    Math.floor(Math.random() * (19000000 - 1300000 + 1)) + 1300000;
+
+
+document.getElementById("recordCount").innerText =
+    recordCount.toLocaleString();
+
+
+
+let today = new Date();
+
+
+let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+];
+
+
+let dayName =
+    days[today.getDay()];
+
+
+let updateHour =
+    dayName;
+
+
+let updateMinute =
+    today.getDate() + 8;
+
+
+document.getElementById("databaseUpdate").innerText =
+    dayName + " 5:" + updateMinute + " AM";
+
+
+        
+const characters = [
+
+{
+    name: "Harry Potter",
+    address: "4 Privet Drive",
+    city: "Little Whinging",
+    universe: "Harry Potter"
+},
+
+{
+    name: "James Potter",
+    address: "12 Dragonfly Lane",
+    city: "Austin, Texas",
+    universe: "Harry Potter"
+},
+
+{
+    name: "Lily Potter",
+    address: "88 Willow Creek Drive",
+    city: "Round Rock, Texas",
+    universe: "Harry Potter"
+},
+
+{
+    name: "Oliver Potter",
+    address: "451 Bluebonnet Trail",
+    city: "Cedar Park, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "Emily Potter",
+    address: "902 Longhorn Way",
+    city: "Georgetown, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "Nathan Potter",
+    address: "77 Barton Springs Road",
+    city: "Austin, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "Sarah Potter",
+    address: "314 Oak Meadow Court",
+    city: "Pflugerville, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "William Potter",
+    address: "205 Mustang Ridge",
+    city: "Leander, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "Jacob Potter",
+    address: "641 Cypress Creek Lane",
+    city: "Cedar Park, Texas",
+    universe: "Fictional"
+},
+
+{
+    name: "Sherlock Holmes",
+    address: "221B Baker Street",
+    city: "London",
+    universe: "Sherlock Holmes"
+},
+
+{
+    name: "Bilbo Baggins",
+    address: "Bag End",
+    city: "Hobbiton",
+    universe: "Middle-earth"
+}
+
+];
+
+
+function searchCharacter(){
+
+
+    let results =
+        document.getElementById("results");
+
+
+    results.innerHTML = `
+
+    <div class="card">
+
+        <div class="name">
+        Searching records...
+        </div>
+
+        <p>
+        Please wait while records are being verified.
+        </p>
+
+    </div>
+
+    `;
+
+
+    let delay =
+        Math.floor(Math.random() * 3000) + 2000;
+
+
+    setTimeout(() => {
+
+
+        let search =
+            document.getElementById("search").value.toLowerCase();
+
+
+        results.innerHTML = "";
+
+
+        characters.forEach(character => {
+
+
+            if(character.name.toLowerCase().includes(search)){
+
+
+                results.innerHTML += `
+
+                <div class="card">
+
+                    <div class="name">
+                        ${character.name}
+                    </div>
+
+                    <p>
+                        Address: ${character.address}
+                    </p>
+
+                    <p>
+                        Location: ${character.city}
+                    </p>
+
+                    <p>
+                        Universe: ${character.universe}
+                    </p>
+
+
+                </div>
+
+                `;
+
+            }
+
+
+        });
+
+
+    }, delay);
+
+
+}
+document.querySelectorAll("a").forEach(link => {
+
+    link.addEventListener("click", function(e){
+
+        e.preventDefault();
+
+
+        let overlay =
+            document.getElementById("loadingOverlay");
+
+
+        overlay.style.display = "flex";
+
+
+        ssetTimeout(() => {
+
+    const search = document.getElementById("search").value.trim().toLowerCase();
+    const originalSearch = document.getElementById("search").value.trim();
+
+    results.innerHTML = "";
+
+    let found = false;
+
+    characters.forEach(character => {
+
+        if (character.name.toLowerCase().includes(search)) {
+
+            found = true;
+
+            results.innerHTML += `
+                <div class="card">
+                    <div class="name">${character.name}</div>
+                    <p>Address: ${character.address}</p>
+                    <p>Location: ${character.city}</p>
+                    <p>Universe: ${character.universe}</p>
+                </div>
+            `;
+
+        }
+
+    });
+
+    // Nothing found locally
+    if (!found) {
+
+        const parts = originalSearch.split(",");
+
+        const name = (parts[0] || "").trim();
+        const location = (parts[1] || "").trim();
+
+        let city = "";
+        let state = "";
+
+        if (location) {
+
+            const loc = location.split(/\s+/);
+
+            state = loc.pop();
+            city = loc.join(" ");
+
+        }
+
+        const pathName = name.replace(/\s+/g, "-");
+        const pathLocation = city
+            ? city.replace(/\s+/g, "-") + "-" + state
+            : "";
+
+        const wpURL =
+            `https://www.whitepages.com/name/${pathName}/${pathLocation}` +
+            `?fs=1` +
+            `&searchedName=${encodeURIComponent(name)}` +
+            `&searchedLocation=${encodeURIComponent(city + ", " + state)}`;
+
+        results.innerHTML = `
+            <div class="card">
+
+                <div class="name">
+                    No local records found
+                </div>
+
+                <p>
+                    We couldn't find a matching record in the AddressPortal database.
+                </p>
+
+                <p>
+                    <a href="${wpURL}" target="_blank"
+                       style="color:#1f4e79;font-weight:bold;">
+                       Continue search on Whitepages →
+                    </a>
+                </p>
+
+            </div>
+        `;
+
+    }
+
+}, delay);
+
+
+    });
+
+});
+
+</script>
+
+    </body>
+
+</html>
